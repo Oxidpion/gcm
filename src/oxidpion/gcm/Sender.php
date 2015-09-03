@@ -20,6 +20,8 @@ class Sender
 		if ($this->validateData($message)) {
 			$response = $this->request((string) $message);
 			switch ($this->resultHttpCode) {
+				case '200':
+					break;
 				case '400': 
 					throw new Exception('Malformed request. ' . $response, Exception::MALFORMED_REQUEST);
 					break;
@@ -29,7 +31,7 @@ class Sender
 				default:
 					throw new Exception('Unknown error. ' . $response, Exception::UNKNOWN_ERROR);
 			}
-			return new Response($message, $reponse);
+			return $response;
 		}
 		return null;
 	}

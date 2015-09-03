@@ -17,8 +17,9 @@ class GCM
 	public function send()
 	{
 		$sender = new Sender($this->apiKey);
-		$response = $sender->send($this->message);
+		$responseBody = $sender->send($this->message);
 		
+		$response = new Response($this->message, $responseBody);
 		foreach ($response->getUpdate() as $oldId => $newId) {
 			$this->updateRegistrationIds($oldId, $newId);
 		}
@@ -30,6 +31,7 @@ class GCM
 		foreach ($response->getUnavailable() as $id) {
 			$this->unavailableRegistration($id);
 		}
+		return $responseBody;
 	}
 	
 	public function getApiKey()

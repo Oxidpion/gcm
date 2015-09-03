@@ -103,6 +103,11 @@ class Message
 		return $this;
 	}
 	
+	public function getTo()
+	{
+		return $this->to;		
+	}
+	
 	public function setRegistrationIds(array $value)
 	{
 		$this->registration_ids = $value;

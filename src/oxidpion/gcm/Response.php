@@ -31,7 +31,14 @@ class Response
 			throw new Exception("Malformed reponse body. " . $responseBody, Exception::MALFORMED_RESPONSE);
 		}
 		$results = array();
-		foreach ($message->getRegistrationIds() as $key => $registrationId) {
+		
+		//send field to or registration_ids
+		$regIds = $message->getRegistrationIds();
+		if (empty($regIds)) {
+			$regIds = array($message->getTo());
+		}
+		
+		foreach ($regIds as $key => $registrationId) {
 			$results[$registrationId] = $response['results'][$key];
 		}
 		
